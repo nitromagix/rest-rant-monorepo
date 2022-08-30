@@ -7,25 +7,6 @@ const router = express.Router();
 
 const { User } = db;
 
-router.get("/profile", async (req, res) => {
-  try {
-    const [authenticationMethod, token] = req.headers.authorization.split(" ");
-
-    switch (authenticationMethod) {
-      case "Bearer":
-        const decodedToken = jwt.decode(process.env.JWT_SECRET, token);
-
-        const { id } = decodedToken.value;
-        const user = await User.findOne({
-          where: { userId: id },
-        });
-        res.json(user);
-    }
-  } catch {
-    res.json(null);
-  }
-});
-
 router.post("/", async (req, res) => {
   const body = req.body;
 
@@ -43,6 +24,25 @@ router.post("/", async (req, res) => {
     res.status(404).json({
       message: "Could not find a user with the provided username and password",
     });
+  }
+});
+
+router.get("/token", async (req, res) => {
+  try {
+    const [authenticationMethod, token] = req.headers.authorization.split(" ");
+
+    switch (authenticationMethod) {
+      case "Bearer":
+        const decodedToken = jwt.decode(process.env.JWT_SECRET, token);
+
+        const { id } = decodedToken.value;
+        const user = await User.findOne({
+          where: { userId: id },
+        });
+        res.json(user);
+    }
+  } catch {
+    res.json(null);
   }
 });
 
