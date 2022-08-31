@@ -13,7 +13,9 @@ function CurrentUserProvider({ children }) {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         }
       );
-      const user = await response.json();
+      const responseJson = await response.json();
+      const user = responseJson.user;
+      // console.log(responseJson.random)
       setCurrentUser(user);
     };
     getLoggedInUser();

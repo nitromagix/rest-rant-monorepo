@@ -29,8 +29,8 @@ function LoginForm() {
 
     if (response.status === 200) {
       setCurrentUser(responseJson.user);
-      // console.log(responseJson.token)
       localStorage.setItem("token", responseJson.token);
+      console.log(responseJson.random)
       history.push("/");
     } else {
       setErrorMessage(responseJson.message);
