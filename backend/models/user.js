@@ -5,6 +5,18 @@ module.exports = (sequelize, DataTypes) => {
     static associate({ Comment }) {
       User.hasMany(Comment, { as: "author", foreignKey: "author_id" });
     }
+
+    canAddPlace() {
+      return this.role === "admin";
+    }
+
+    canEditPlace() {
+      return this.role === "admin";
+    }
+
+    canDeletePlace() {
+      return this.role === "admin";
+    }
   }
   User.init(
     {
